@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TP Docker - TODO App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; }
+        .task { padding: 10px; border: 1px solid #ddd; margin: 5px 0; }
+        .env-badge { background: #007bff; color: white; padding: 2px 8px; border-radius: 4px; }
+        input[type="text"] { width: 300px; padding: 8px; }
+        button { padding: 8px 16px; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TODO App - TP Docker</h1>
+        <div id="environment"></div>
+        
+        <div>
+            <input type="text" id="taskInput" placeholder="Nueva tarea...">
+            <button onclick="addTask()">Agregar</button>
+        </div>
+        
+        <div id="tasks"></div>
+    </div>
+
+    <script>
+        async function loadTasks() {
+            const response = await fetch('/api/tasks');
+            const data = await response.json();
+            
+            document.getElementById('environment').innerHTML = 
+                `<span class="env-badge">Entorno: ${data.environment}</span>`;
+            
+            document.getElementById('tasks').innerHTML = 
+                data.tasks.map(task => 
+                    `<div class="task">${task.title} <small>(${task.environment})</small></div>`
+                ).join('');
+        }
+        
+        async function addTask() {
+            const title = document.getElementById('taskInput').value;
+            if (!title) return;
+            
+            await fetch('/api/tasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title })
+            });
+            
+            document.getElementById('taskInput').value = '';
+            loadTasks();
+        }
+        
+        loadTasks();
+    </script>
+</body>
+</html>
