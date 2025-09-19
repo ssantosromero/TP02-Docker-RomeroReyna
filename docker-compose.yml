@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Base de datos para QA
+  postgres-qa:
+    image: postgres:13
+    container_name: postgres-qa
+    environment:
+      POSTGRES_PASSWORD: qapassword
+      POSTGRES_DB: todoapp
+    volumes:
+      - postgres-qa-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - qa-network
+
+  # Base de datos para PROD
+  postgres-prod:
+    image: postgres:13
+    container_name: postgres-prod
+    environment:
+      POSTGRES_PASSWORD: prodpassword
+      POSTGRES_DB: todoapp
+    volumes:
+      - postgres-prod-data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - prod-network
+
+  # Aplicación QA
+  todoapp-qa:
+    image: sromeror/tp-docker-app:v1.0
+    container_name: todoapp-qa
+    environment:
+      DB_HOST: postgres-qa
+      DB_PORT: 5432
+      DB_PASSWORD: qapassword
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres-qa
+    networks:
+      - qa-network
+
+  # Aplicación PROD
+  todoapp-prod:
+    image: sromeror/tp-docker-app:v1.0
+    container_name: todoapp-prod
+    environment:
+      DB_HOST: postgres-prod
+      DB_PORT: 5432
+      DB_PASSWORD: prodpassword
+      NODE_ENV: production
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres-prod
+    networks:
+      - prod-network
+
+volumes:
+  postgres-qa-data:
+  postgres-prod-data:
+
+networks:
+  qa-network:
+    driver: bridge
+  prod-network:
+    driver: bridge
