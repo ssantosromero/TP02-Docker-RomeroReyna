@@ -60,7 +60,7 @@ Por qué esta estructura: Copio package.json primero para aprovechar el cache de
 6) Primero me autentiqué en Docker Hub:
 docker login
 
-7)Tuve que crear el repositorio tp-docker-app en Docker Hub manualmente. Mi usuario de Docker Hub es sromeror
+7) Mi usuario de Docker Hub es sromeror
 
 8)Publiqué la imagen:
 
