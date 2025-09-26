@@ -2,11 +2,11 @@
 
 Aplicación TODO containerizada con Docker para demostrar el uso de contenedores en entornos QA y PROD.
 
-## 🚀 Descripción
+##Descripción
 
 Esta aplicación TODO está desarrollada en Node.js y PostgreSQL, containerizada para funcionar en dos entornos independientes (QA y PROD) usando la misma imagen base pero con diferentes configuraciones.
 
-## 🛠️ Tecnologías
+##Tecnologías
 
 - **Backend**: Node.js con Express
 - **Base de datos**: PostgreSQL 13
@@ -40,7 +40,7 @@ docker push sromeror/tp-docker-app:dev
 docker push sromeror/tp-docker-app:v1.0
 
 
-# 🚀 Ejecución con Docker Compose 
+#Ejecución con Docker Compose 
 ##Levantar todo el entorno
  # Levantar todos los servicios
 	docker-compose up -d
