@@ -53,6 +53,7 @@ COPY . . (copio código fuente)
 EXPOSE 3000 (expongo puerto)
 CMD ["npm", "start"](comando para iniciar)
 
+Crea las imagenes 
 Por qué esta estructura: Copio package.json primero para aprovechar el cache de Docker cuando solo cambio código, no dependencias.
 
 ## 3. Publicación en Docker Hub
